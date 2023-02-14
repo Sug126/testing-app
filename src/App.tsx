@@ -1,26 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
+import { useState, useEffect } from 'react';
 import './App.css';
 
-function App() {
+
+const App: React.FC = () => {
+  const [swCharacter, setSwCharacter] = useState("Name");
+
+  const getCharacters = async () => {
+    const apiResponse = await fetch(`https://swapi.dev/api/people/1`);
+    const json = await apiResponse.json();
+    setSwCharacter(json.name);
+  };
+
+  useEffect(() => {
+    getCharacters();
+  });
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <header className="App-header">SWAPI - The Star Wars API</header>
+      <p>first person on the page - {swCharacter}</p>
     </div>
   );
 }
+
 
 export default App;
